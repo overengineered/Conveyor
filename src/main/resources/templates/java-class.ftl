@@ -1,8 +1,7 @@
 <#macro javaValueClass
     fields
     name=conveyor.file.name
-    package=conveyor.file.package
-    startHash=conveyor.file.startHash>
+    package=conveyor.file.package>
 package ${package};
 <#if has_array(fields?values)>
 
@@ -48,7 +47,7 @@ public final class ${name} {
 
     @Override
     public int hashCode() {
-        int h = ${startHash};
+        int h = ${hashCode(name)};
         <#list fields as fname, ftype>
         h *= 31;
         h ^= ${hash_expression(ftype)("this." + fname)};

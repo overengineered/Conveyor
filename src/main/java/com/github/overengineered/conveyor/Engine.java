@@ -1,5 +1,7 @@
 package com.github.overengineered.conveyor;
 
+import com.github.overengineered.conveyor.method.HashCodeMethod;
+
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -73,7 +75,6 @@ class Engine {
         Map<String, String> fileProperties = new HashMap<>();
         fileProperties.put("name", baseName);
         fileProperties.put("package", packageName);
-        fileProperties.put("startHash", String.valueOf(baseName.hashCode()));
 
         Map<String, Object> conveyorProperties = new HashMap<>();
         conveyorProperties.put("template", mTemplateProperties);
@@ -81,6 +82,7 @@ class Engine {
 
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("conveyor", conveyorProperties);
+        dataModel.put("hashCode", new HashCodeMethod());
 
         StringBuilder templateLines = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
