@@ -1,6 +1,10 @@
 package com.github.overengineered.conveyor;
 
+import com.github.overengineered.conveyor.method.CamelCaseRename;
 import com.github.overengineered.conveyor.method.HashCodeMethod;
+import com.github.overengineered.conveyor.method.LowerCaseRename;
+import com.github.overengineered.conveyor.method.TitleCaseRename;
+import com.github.overengineered.conveyor.method.UpperCaseRename;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -80,8 +84,15 @@ class Engine {
         conveyorProperties.put("template", mTemplateProperties);
         conveyorProperties.put("file", fileProperties);
 
+        Map<String, Object> transformers = new HashMap<>();
+        transformers.put("camelCase", new CamelCaseRename());
+        transformers.put("TitleCase", new TitleCaseRename());
+        transformers.put("UPPER_CASE", new UpperCaseRename());
+        transformers.put("lower_case", new LowerCaseRename());
+
         Map<String, Object> dataModel = new HashMap<>();
         dataModel.put("conveyor", conveyorProperties);
+        dataModel.put("to", transformers);
         dataModel.put("hashCode", new HashCodeMethod());
 
         StringBuilder templateLines = new StringBuilder();

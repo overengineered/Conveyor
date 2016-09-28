@@ -12,7 +12,13 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     compile 'commons-io:commons-io:2.5'
+    compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.freemarker:freemarker:2.3.25-incubating'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 jar {
